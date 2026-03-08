@@ -1,5 +1,5 @@
 const API_URL =
-"https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
+"https://script.google.com/macros/s/AKfycbxfSTHxRUlF6v8-yzTMjF_aQn2698RQsfZX-jKQOZ21ryTKLzsbDwZzhuGXS0LMDEa3/exec";
 
 document.addEventListener("DOMContentLoaded", function(){
 
