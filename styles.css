@@ -1,0 +1,21 @@
+body{
+font-family:Arial;
+background:#111;
+color:white;
+text-align:center;
+}
+
+#reader{
+width:320px;
+margin:40px auto;
+}
+
+button{
+padding:12px 25px;
+font-size:16px;
+background:red;
+border:none;
+border-radius:6px;
+color:white;
+cursor:pointer;
+}
