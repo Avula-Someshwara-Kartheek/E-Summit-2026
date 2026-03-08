@@ -5,28 +5,27 @@ document.addEventListener("DOMContentLoaded", function(){
 
 if(document.getElementById("reader")){
 
-let lastScan = null;
-
 const scanner = new Html5Qrcode("reader");
 
 scanner.start(
 { facingMode: "environment" },
 { fps:10, qrbox:250 },
 
-function(decodedText){
+onScanSuccess
 
-if(decodedText === lastScan){
-return;
+);
+
 }
 
-lastScan = decodedText;
+});
+
+
+function onScanSuccess(decodedText){
 
 document.getElementById("result").innerText =
 "Verifying Ticket...";
 
-/* SEND QR TO APPS SCRIPT */
-
-fetch("https://script.google.com/macros/s/AKfycbw1rsZj15qsa53SzQpN0XPPIe3LZ2d30vLhfLhZ5zb3YAUBjAq4qwnh08f5afTaRUCg/exec", {
+fetch(API_URL,{
 
 method:"POST",
 
@@ -36,26 +35,27 @@ headers:{
 
 body:JSON.stringify({
 
+action:"scan",
 qrText:decodedText,
-day:"Day-1",
-event:"Registration Desk",
-volunteer:"Scanner Device"
+day:localStorage.getItem("day"),
+event:localStorage.getItem("event"),
+volunteer:localStorage.getItem("volunteer")
 
 })
 
 })
 
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
-if(data.status === "success"){
+if(data.status==="success"){
 
 document.getElementById("result").innerText =
 "ENTRY CONFIRMED: " + data.name;
 
 }
 
-else if(data.status === "duplicate"){
+else if(data.status==="duplicate"){
 
 document.getElementById("result").innerText =
 "ALREADY SCANNED";
@@ -69,12 +69,7 @@ document.getElementById("result").innerText =
 
 }
 
-setTimeout(()=>{
-lastScan = null;
-},2000);
-
 })
-
 .catch(err => {
 
 document.getElementById("result").innerText =
@@ -83,9 +78,3 @@ document.getElementById("result").innerText =
 });
 
 }
-
-);
-
-}
-
-});
