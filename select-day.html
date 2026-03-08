@@ -1,0 +1,17 @@
+<h2>Select Day</h2>
+
+<button onclick="setDay('Day-1')">Day 1</button>
+<button onclick="setDay('Day-2')">Day 2</button>
+<button onclick="setDay('Day-3')">Day 3</button>
+
+<script>
+
+function setDay(day){
+
+localStorage.setItem("day",day);
+
+window.location="select-event.html";
+
+}
+
+</script>
