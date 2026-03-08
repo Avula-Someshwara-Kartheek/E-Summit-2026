@@ -1,0 +1,29 @@
+<h2>Select Event</h2>
+
+<button onclick="setEvent('Registration Desk')">
+Registration Desk
+</button>
+
+<button onclick="setEvent('Master-Class')">
+Master-Class
+</button>
+
+<button onclick="setEvent('E-Talk')">
+E-Talk
+</button>
+
+<button onclick="setEvent('Lunch Area')">
+Lunch Area
+</button>
+
+<script>
+
+function setEvent(eventName){
+
+localStorage.setItem("event",eventName);
+
+window.location="scanner.html";
+
+}
+
+</script>
