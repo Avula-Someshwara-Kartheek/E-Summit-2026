@@ -1,23 +1,15 @@
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
 
 function login(){
 
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-fetch(API_URL, {
+const url =
+`${API_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
 
-method: "POST",
-
-body: JSON.stringify({
-action: "login",
-email: email,
-password: password
-})
-
-})
-.then(res => res.json())
+fetch(url)
+.then(response => response.json())
 .then(data => {
 
 console.log(data);
@@ -30,7 +22,7 @@ window.location.href = "day.html";
 }
 else{
 
-alert("Invalid Credentials");
+alert("Invalid credentials");
 
 }
 
