@@ -1,6 +1,9 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
 
-function sendScan(decodedText){
+function login(){
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
 fetch(API_URL, {
 
@@ -11,44 +14,35 @@ headers: {
 },
 
 body: JSON.stringify({
-action: "scan",
-qrText: decodedText,
-day: localStorage.getItem("day"),
-event: localStorage.getItem("event"),
-volunteer: localStorage.getItem("volunteer")
+action:"login",
+email:email,
+password:password
 })
 
 })
+
 .then(res => res.json())
+
 .then(data => {
 
-console.log("Response:", data);
+console.log(data);
 
 if(data.status === "success"){
 
-document.getElementById("result").innerText =
-"ENTRY CONFIRMED: " + data.name;
+localStorage.setItem("volunteer", data.name);
 
-}
-
-else if(data.status === "duplicate"){
-
-document.getElementById("result").innerText =
-"ALREADY SCANNED";
+window.location.href = "day.html";
 
 }
 
 else{
 
-document.getElementById("result").innerText =
-"INVALID TICKET";
+alert("Invalid Credentials");
 
 }
 
 })
+
 .catch(err => console.error(err));
 
-}
-
-}
 }
