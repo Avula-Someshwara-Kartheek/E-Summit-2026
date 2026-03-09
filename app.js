@@ -1,48 +1,81 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxfSTHxRUlF6v8-yzTMjF_aQn2698RQsfZX-jKQOZ21ryTKLzsbDwZzhuGXS0LMDEa3/exec";
 
-function login(){
+document.addEventListener("DOMContentLoaded", function(){
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+if(document.getElementById("reader")){
 
-fetch(API_URL, {
+const scanner = new Html5Qrcode("reader");
 
-method: "POST",
+scanner.start(
+{ facingMode: "environment" },
+{ fps:10, qrbox:250 },
 
-headers: {
-"Content-Type": "text/plain;charset=utf-8"
+onScanSuccess
+
+);
+
+}
+
+});
+
+
+function onScanSuccess(decodedText){
+
+document.getElementById("result").innerText =
+"Verifying Ticket...";
+
+fetch(API_URL,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
 },
 
-body: JSON.stringify({
-action:"login",
-email:email,
-password:password
-})
+body:JSON.stringify({
+
+action:"scan",
+qrText:decodedText,
+day:localStorage.getItem("day"),
+event:localStorage.getItem("event"),
+volunteer:localStorage.getItem("volunteer")
 
 })
 
-.then(res => res.json())
+})
 
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
 
-console.log(data);
+if(data.status==="success"){
 
-if(data.status === "success"){
+document.getElementById("result").innerText =
+"ENTRY CONFIRMED: " + data.name;
 
-localStorage.setItem("volunteer", data.name);
+}
 
-window.location.href = "day.html";
+else if(data.status==="duplicate"){
+
+document.getElementById("result").innerText =
+"ALREADY SCANNED";
 
 }
 
 else{
 
-alert("Invalid Credentials");
+document.getElementById("result").innerText =
+"INVALID TICKET";
 
 }
 
 })
+.catch(err => {
 
-.catch(err => console.error(err));
+document.getElementById("result").innerText =
+"SERVER ERROR";
 
+});
+
+}
 }
