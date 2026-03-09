@@ -1,4 +1,5 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
 
 function login(){
 
@@ -12,7 +13,7 @@ fetch(url)
 .then(response => response.json())
 .then(data => {
 
-console.log(data);
+console.log("API Response:", data);
 
 if(data.status === "success"){
 
@@ -27,6 +28,6 @@ alert("Invalid credentials");
 }
 
 })
-.catch(err => console.error(err));
+.catch(err => console.error("Fetch Error:", err));
 
 }
