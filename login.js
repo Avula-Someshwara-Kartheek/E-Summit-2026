@@ -1,45 +1,40 @@
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyNeFEI36Z3DvERgAP4BZnGFPfG3J7lKEfE4WcwpVbOl4Kb4lMnbpC-LSN5YTejragJ/exec";
 
 function login(){
-const API_URL = "https://script.google.com/macros/s/AKfycbxfSTHxRUlF6v8-yzTMjF_aQn2698RQsfZX-jKQOZ21ryTKLzsbDwZzhuGXS0LMDEa3/exec";
-const email =
-document.getElementById("email").value;
 
-const password =
-document.getElementById("password").value;
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-fetch(API_URL,{
+fetch(API_URL, {
 
-method:"POST",
+method: "POST",
 
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-action:"login",
-email:email,
-password:password
+body: JSON.stringify({
+action: "login",
+email: email,
+password: password
 })
 
 })
+.then(res => res.json())
+.then(data => {
 
-.then(res=>res.json())
-.then(data=>{
+console.log(data);
 
-if(data.status==="success"){
+if(data.status === "success"){
 
-localStorage.setItem("volunteer",data.name);
-
-window.location="select-day.html";
+localStorage.setItem("volunteer", data.name);
+window.location.href = "day.html";
 
 }
-
 else{
 
 alert("Invalid Credentials");
 
 }
 
-});
+})
+.catch(err => console.error(err));
 
 }
